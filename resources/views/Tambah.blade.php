@@ -9,7 +9,8 @@
 <body>
     <div class="container mt-5">
         <h2>Tambah Produk</h2>
-        <form action="{{ route('store_produk') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('store') }}" method="post" enctype="multipart/form-data">
+
         @csrf
             <div class="form-group">
                 <label for="produk">Produk</label>
@@ -26,7 +27,7 @@
             <div class="form-group">
                 <label for="kategori">Kategori</label>
                 <select class="form-control" id="kategori" name="kategori" required>
-                    <option value="digital_printing">Digital Printing</option>
+                    <option value="digital printing">Digital Printing</option>
                     <option value="spanduk">Spanduk</option>
                     <option value="poster">Poster</option>
                 </select>
@@ -40,7 +41,7 @@
                 <textarea class="form-control" id="deskripsi" name="deskripsi" rows="4" required></textarea>
             </div>
             <button type="submit" class="btn btn-success">Simpan</button>
-            <a href="/" class="btn btn-secondary">Kembali</a>
+            <a href="{{ route('home') }}" class="btn btn-secondary">Kembali</a>
         </form>
     </div>
 </body>

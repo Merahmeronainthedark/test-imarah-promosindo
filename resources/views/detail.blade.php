@@ -16,16 +16,21 @@
             
             <div class="card-body">
                 <img src="{{asset('image/'.$products->image)}}" alt="jpeg" class="img-fluid mb-3">
-                <p>{{ $products->deskripsi }}</p>
+
             </div>          
+            <p class="card-text"><strong>Kategori:</strong> {{ $products->kategori }}</p>
+                <p class="card-text"><strong>Deskripsi:</strong> {{ $products->deskripsi }}</p>
+
         </div>
 
         <div class="mt-3">
             <a href="/" class="btn btn-secondary">Kembali</a>
-            <a href="{{ route('Edit', $products->slug) }}" class="btn btn-warning">Edit</a>
+            <a href="{{ route('Edit', $products->id) }}" class="btn btn-warning">Edit</a>
             <form action="{{ route('delete', ['id' => $products->id]) }}" method="POST" class="d-inline">
-                <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus produk ini?')">Delete</button>
-            </form>
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus produk ini?')">Delete</button>
+                        </form>
         </div>
     </div>
 </body>

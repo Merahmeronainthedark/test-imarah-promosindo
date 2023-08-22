@@ -16,7 +16,7 @@ class HomeController extends Controller
     {
         return view('tambah');
     }
-    public function store_produk(Request $request)
+    public function store(Request $request)
     {
         $request->validate([
             'produk' => 'required',
@@ -37,48 +37,48 @@ class HomeController extends Controller
     }
 
     products::create($input);
-    return redirect()->route('home')->with('success', 'Produk berhasil disimpan.');
+    return redirect()->route('home')->with('success', 'Produk berhasil ditambahkan.');
 }
 
-    public function Edit($slug)
+    public function Edit($id)
     {
-        $products = products::where('slug', $slug)->first();
+        $products = products::where('id', $id)->first();
         return view('Edit', compact('products'));
     }
-public function edit_produk(Request $request)
+    public function edit_produk(Request $request, $id)
     {
         $request->validate([
             'produk' => 'required',
-            'slug' => 'required',
             'harga' => 'required',
             'kategori' => 'required',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif', 
-        'deskripsi' => 'required',
-    ]);
-
-    $input = $request->all();
-
-    if ($image = $request->file('image')) {
-        $destinationPath = 'image/';
-        $imageName = $image->getClientOriginalName();
-        $image->move($destinationPath, $imageName);
-        $input['image'] = $imageName;
+            'deskripsi' => 'required',
+        ]);
+    
+        $product = products::where('id', $id)->firstOrFail();
+        $input = $request->all();
+    
+        if ($image = $request->file('image')) {
+            $destinationPath = 'image/';
+            $imageName = $image->getClientOriginalName();
+            $image->move($destinationPath, $imageName);
+            $input['image'] = $imageName;
+        } else {
+            unset($input['image']);
+        }
+    
+        $product->update($input);
+    
+        return redirect()->route('home', ['id' => $product->id])->with('success', 'Produk berhasil diperbarui.');
     }
-
-    products::create($input);
-    return redirect()->route('edit_produk')->with('success', 'Produk berhasil disimpan.');
-}
-public function Delete(products $product)
+    
+public function Delete($id)
 {
-    $product->delete();
+    $product=products::where('id', $id)->delete();
     return redirect('/')->with('success', 'Data berhasil dihapus');
 }
-public function detail($slug)
+public function detail($id)
 {
-$products = products::where('slug', $slug)->first();
-if (!$products) {
-    abort(404);
-}
+$products = products::where('id', $id)->first();
 return view('detail', compact('products'));
 }
 }

@@ -14,11 +14,13 @@ use App\Http\Controllers\HomeController;
 |
 */
 
-Route::get('/', [HomeController::class, 'index']);
+Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/tambah', [HomeController::class, 'tambah']);
-Route::post('/tambah', [HomeController::class, 'store_produk'])->name('store_produk');
-Route::get('/detail/{slug}', [HomeController::class, 'detail'])->name('detail');
-Route::get('/edit/{slug}', [HomeController::class, 'Edit'])->name('Edit');
-Route::post('/', [HomeController::class, 'edit'])->name('edit_produk');
-Route::delete('/', [HomeController::class, 'Delete'])->name('delete');
+Route::post('/tambah', [HomeController::class, 'store'])->name('store');
+Route::get('/detail/{id}', [HomeController::class, 'detail'])->name('detail');
+Route::get('/edit/{id}', [HomeController::class, 'Edit'])->name('Edit');
+Route::put('/edit/{id}', [HomeController::class, 'edit_produk'])->name('edit_produk');
+Route::delete('/delete/{id}', [HomeController::class, 'Delete'])->name('delete');
+
+
 
